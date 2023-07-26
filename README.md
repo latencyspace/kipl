@@ -1,4 +1,6 @@
-<img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&fontColor=9370DB&fontSize=40&fontAlign=60&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=transparent&fontColor=9370DB&text=kipl👶🏻%20&height=150&fontSize=45" alt="transparent" />
+</div>
 
 <p align="center">AI/빅데이터 기반의 영유아 대상 식단 추천 서비스, <strong>키플</strong></p>
 <p align="center"><a href="https://github.com/Latencygg/kipl"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLatencygg%2Fkipl&count_bg=%23000000&title_bg=%23000000&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a></p>
