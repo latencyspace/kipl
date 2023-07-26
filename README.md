@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&fontColor=f7f5f5&textBg=282829&fontSize=40&fontAlign=50&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
+<img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&color=0:353535:4C4C4C&fontColor=ffffff&textBg=282829&fontSize=40&fontAlign=50&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
 
 <p>소개말 작성</p>
 <!-- text-align: center, 프로젝트 이름: bold -->
