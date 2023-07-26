@@ -1,6 +1,7 @@
 <img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&color=0:353535:4C4C4C&fontColor=ffffff&textBg=282829&fontSize=40&fontAlign=50&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
 
 <p>소개말 작성</p>
+<a href="https://github.com/Latencygg/kipl"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLatencygg%2Fkipl&count_bg=%23000000&title_bg=%23000000&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a>
 <!-- text-align: center, 프로젝트 이름: bold -->
 
 <!-- 아래 제목말 스타일 수정 필요 -->
