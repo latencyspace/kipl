@@ -1,44 +1,37 @@
-<img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&fontColor=9370DB&fontSize=40&fontAlign=50&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
+<img src="https://capsule-render.vercel.app/api?type=transparent&text=kipl👶🏻%20&fontColor=9370DB&fontSize=40&fontAlign=60&fontAlignY=43&animation=fadeIn&height=250&section=header"/>
 
-<p>소개말 작성</p>
-<a href="https://github.com/Latencygg/kipl"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLatencygg%2Fkipl&count_bg=%23000000&title_bg=%23000000&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a>
-<!-- text-align: center, 프로젝트 이름: bold -->
+<p align="center">AI/빅데이터 기반의 영유아 대상 식단 추천 서비스, <strong>키플</strong></p>
+<p align="center"><a href="https://github.com/Latencygg/kipl"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLatencygg%2Fkipl&count_bg=%23000000&title_bg=%23000000&icon=github.svg&icon_color=%23E7E7E7&title=Github&edge_flat=false"/></a></p>
 
-<!-- 아래 제목말 스타일 수정 필요 -->
+***
 
-### 프로젝트 선정 및 개발 이유
-  1. (수정 필요)프로젝트 아이디어 구상 단계 스토리텔링
-  2. (수정 필요)사회적 이슈(뉴스 등) 자료 스크랩
-  3. (수정 필요)식단 관련으로 다양한 어플들이 있지만, 전문성이 부족하고 개발 시장에서 두각을 보인 프로그램이 아직 없음을 강조
+### 💡 서비스 목적
+  - 연령대별 최적의 성장 및 발달을 위한 양질의 데이터를 제공합니다.
+  - AI(머신러닝 & 딥러닝)을 활용한 최적의 데이터 제공합니다.
+  - 가정에서는 물론, 어린이집이나 아동 보호소 등 다양한 장소 및 분야에서 활용되어질 수 있도록 활용도 높은 서비스를 제공합니다.
 
-### 프로젝트 목표
-  1. (수정 필요)궁극적 목표
-  2. AI(ML/DL)을 활용한 최적의 데이터 제공
-  3. (수정 필요)Google Cloud Platform 활용 내용 작성
-  4. (수정 필요)부모님들 말고도 어린이집, 아동 보호소 등 전문 업체에서도 유용하게 사용하길 바람
-  5. (수정 필요)Github, Google Workspace와 같은 협업툴을 통한 활발한 소통을 바탕으로 효율적인 협업을 추구합니다.
+### 🏃🏻 프로젝트 목표
+  - Google Cloud Platform의 서비스들을 적재적소에 활용하여 프로젝트의 완성도를 높입니다.
+  - Google Workspace, Github와 같은 협업 서비스를 사용하여 활발한 소통을 바탕으로 효율적인 협업을 통해 공동의 목표에 달성합니다.
 
-### 프로젝트 소개 및 설계
-  1. 개발자 소개
-  2. 사용한 기술 스택(프레임워크, 개발 환경(IDE), 툴 포함) 및 개발 방법론
-<p>
-  <img src="https://img.shields.io/badge/Google%20Cloud%20Platform-white?style=flat-square&logo=googlecloud&logoColor=white&labelColor=%234285F4&color=%234285F4"/>
-</p>
+### 📚 기술 스택
+  - Google Cloud Platform
+  - Java
+  - Spring Boot
+  - TensorFlow
 
-<p>
-  <img src="https://img.shields.io/badge/Git-white?style=flat-square&logo=git&logoColor=white&labelColor=%23F05032&color=%23F05032"/>
-  <img src="https://img.shields.io/badge/GitHub-white?style=flat-square&logo=github&logoColor=white&labelColor=%23181717&color=%23181717"/>
-</p>
-  3. 개발 일정
-  4. WBS
-  5. ERD
-  6. (FE 활용 시)화면 흐름도
-  7. 구현 기능(API)
-  8. 시현 자료(프로토타입 스크린샷)
+### 🗓️ 개발 일정
+  - [해당 문서를 확인해주세요!](https://docs.google.com/spreadsheets/d/1K13jrMJEbruGH6SgpTZyGPpVdJmgOs0t4wgxs4v66hs/edit?usp=sharing)
 
-### 기술적 이슈와 해결 과정
+### 📌 WBS
 
+### 📑 ERD
 
+### 🔗 API
+  - 영유아의 나이를 기준으로 세분화한 식단 제공 서비스
+  - 알러지 필터링 서비스
+  - 추천을 많이 받은 사용자의 Post & Comment 데이터화
 
+### 🖥️ 프로토타입
 
-
+### 🔑 기술적 이슈와 해결 과정
