@@ -7,6 +7,10 @@
 
 ***
 
+### 🔖 소개
+  - 키플(kipl)은 키즈 플레이트(Kid's Plate)의 줄임말로, AI/빅데이터 기반 영유아 대상 식단 추천 서비스입니다.
+  - 비지도학습으로 군집화된 데이터를 카테고리화하여 만든 AI 모델을 통해 사용자의 요구 사항이 반영된 결과를 제공합니다.
+
 ### 💡 서비스 목적
   - 연령대별 최적의 성장 및 발달을 위한 양질의 데이터를 제공합니다.
   - AI(머신러닝 & 딥러닝)을 활용한 최적의 데이터를 제공합니다.
@@ -17,10 +21,16 @@
   - Google Workspace, Github와 같은 협업 서비스를 사용하여 활발한 소통을 바탕으로 효율적인 협업을 통해 공동의 목표에 달성합니다.
 
 ### 📚 기술 스택
-  - Google Cloud Platform
-  - Java
-  - Spring Boot
-  - TensorFlow
+![Static Badge](https://img.shields.io/badge/Google%20Cloud%20Platform-%234285F4?style=flat&logo=googlecloud&logoColor=white&labelColor=%234285F4)
+<br>
+![Static Badge](https://img.shields.io/badge/Python-%233776AB?logo=python&logoColor=white&labelColor=%233776AB)
+![Static Badge](https://img.shields.io/badge/TensorFlow-%23FF6F00?logo=tensorflow&logoColor=white&labelColor=%23FF6F00)
+<br>
+![Static Badge](https://img.shields.io/badge/Java-%23E85C33?labelColor=%23E85C33)
+![Static Badge](https://img.shields.io/badge/Spring%20Boot-%236DB33F?style=flat&logo=springboot&logoColor=white&labelColor=%236DB33F)
+<br>
+![Static Badge](https://img.shields.io/badge/Git-%23F05032?logo=git&logoColor=white&labelColor=%23F05032)
+![Static Badge](https://img.shields.io/badge/GitHub-%23181717?logo=git&logoColor=white&labelColor=%23181717)
 
 ### 🗓️ 개발 일정
   - [해당 문서를 확인해주세요!](https://docs.google.com/spreadsheets/d/1K13jrMJEbruGH6SgpTZyGPpVdJmgOs0t4wgxs4v66hs/edit?usp=sharing)
