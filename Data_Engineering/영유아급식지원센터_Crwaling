@@ -1,0 +1,102 @@
+# 사용 라이브러리 : urllub, bs4, pandas
+# Crawling url : https://ccfsm.foodnara.go.kr/?menuno=132&pageIndex=1
+
+
+=====================================================================================
+#[코드]
+=====================================================================================
+#!/usr/bin/env python3
+import urllib.request as req
+import urllib.parse as parse
+from bs4 import BeautifulSoup as bs
+import pandas as pd
+
+cate = []
+obj = []
+base_url = 'https://ccfsm.foodnara.go.kr/?menuno=132&pageIndex={}'
+# temp2 = []
+
+# 페이지 인덱스가 1부터 15까지인 반복문
+for page_index in range(1, 16):
+    url = base_url.format(page_index)
+    temp = req.urlopen(url).read()
+    soup = bs(temp, "html.parser")
+    
+    # table tag중 style이 margin-bottom: 8px라는 부분 전부 추출
+    foods = soup.find_all('table', {'style': 'margin-bottom: 8px'})
+
+    for food in foods:
+        # style tag중에 td부분의 태그의 strong과 span의 텍스트 추출
+        for temp in food.find_all('td', {'class': 'txt_ss'}):
+            # 문자 ',' 기준으로 분리 후 사이의 분순물 제거
+            cate.append(temp.find('strong').text.replace('\t', '').replace('\n', ''))
+            obj.append(temp.find('span').text.replace('\t', '').replace('\n', ''))
+
+i = 0
+food_name = []
+ca = []
+kal = []
+ingredients = []
+temp_dick = {}
+
+while True:
+    try:
+        #추출한 리스트에서 음식 이름, 카테고리, 칼로리, 레시피 재료 추출
+        if i%3 == 0:
+            food_name.append((obj[i].split(' '))[-1]) 
+            ca.append((obj[i].split(' '))[0])
+        elif i%3 == 1:
+            kal.append((obj[i].split(' '))[0])
+        else:
+            ingredients.append(obj[i].split(','))
+        i+=1
+    except IndexError:
+        break
+
+cate = list(set(cate))
+ca = list(set(ca))[0]
+ingredient = set()
+
+
+# ingredients의 재료들을 사전화 시키기 위한 중복 요소들 제거
+for a in ingredients:
+    for j in a:
+        ingredient.add(j)
+ingredient = list(ingredient)
+
+# 리스트로 만든 재료들을 사전으로 전환
+temp_dick = temp_dick.fromkeys(ingredient, 0)
+
+# 파싱하면서 발생한 문자 앞뒤의 공백 제거
+cleaned_ingredients = [[ingredient.strip() for ingredient in item if ingredient != ' '] for item in ingredients]
+
+# one-hot-encoding
+result_list = [{key.strip(): value for key, value in temp_dick.items()} for _ in range(len(cleaned_ingredients))]
+for i in range(len(result_list)):
+    for result in result_list[i]:
+        if result in cleaned_ingredients[i]:
+            result_list[i][result] = 1
+
+# 음식이름과 칼로리 컬럼 생성
+df = pd.DataFrame({
+    'food_name' : food_name,
+    'kal' : kal
+})
+
+result_df = pd.DataFrame(result_list)
+
+colume = []
+columes = result_df.columns
+
+# 기존 칼럼값 정제, 공백 제거
+for i in columes:
+    colume.append((i.split(' '))[0])
+
+# 기존 컬럼 이름을 새로운 컬럼 이름으로 변경
+result_df.columns = colume
+
+# 기존 테이블에 one-hot-encoding된 테이블 연결
+df = pd.concat([df, result_df], axis=1)
+
+#csv 파일로 내보내기
+df.to_csv('test.csv', index=False, encoding='utf-8-sig')
