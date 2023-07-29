@@ -37,7 +37,7 @@
 
 ### 📌 WBS
 
-<img src="https://github.com/Latencygg/kipl/blob/main/wbs.png" width="1280" height="720">
+<img src="https://github.com/Latencygg/kipl/blob/main/wbs.png" width="auto" height="auto">
 
 ### 📑 ERD
 
