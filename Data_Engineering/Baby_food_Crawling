@@ -2,7 +2,7 @@
 # Crawling url : https://ccfsm.foodnara.go.kr/?menuno=132&pageIndex={} 1~15
 # Crawling url : https://ccfsm.foodnara.go.kr/meal/recipe/infantinfo/recipe_popup.html?fcode={} 3101~3341
 # 크롤링 웹 사이트 출처 : 어린이 급식지원 관리센터(https://ccfsm.foodnara.go.kr/?menuno=132)
-# 사용 API : x
+# 사용 API : Vertual AI's Jupyter Notebook, GCP
 
 # 코드 이용시 주의사항 : GCP Vertual AI's Jupyter NoteBook으로 작업을 하여서, 파일 다운로드 path나 csv저장 경로는 local에서 진행시 각 체제의 맞게 변경 바람!!
 ========================================================================================================================================================================
