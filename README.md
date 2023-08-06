@@ -37,13 +37,24 @@
 
 ### 📌 WBS
 
-<img src="https://github.com/Latencygg/kipl/blob/main/wbs.png" width="auto" height="auto">
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/wbs.png" width="auto" height="auto">
+
+### 🔎 시나리오
+
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario8.PNG" width="auto" height="auto">
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario1.PNG" width="auto" height="auto">
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario2.jpg" width="auto" height="auto">
 
 ### 📑 ERD
+
+#### DB Schema
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/db_schema_erd.png" width="auto" height="auto">
 
 ### 🔗 API
   - 영유아의 나이를 기준으로 세분화한 식단 제공 서비스
   - 알러지 필터링 서비스
+  - 기존 데이터에 없던 식단 추가 리포트 요청
+  - 추천받은 식단에 대한 👍🏻(Good) & 👎🏻(Bad) 평가
 
 ### 🖥️ 프로토타입
 
