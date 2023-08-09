@@ -1,0 +1,49 @@
+{
+  "name": "projects/jnu-idv-11/alertPolicies/2189077922988353955",
+  "displayName": "over-network-traffic",
+  "documentation": {},
+  "userLabels": {},
+  "conditions": [
+    {
+      "name": "projects/jnu-idv-11/alertPolicies/2189077922988353955/conditions/2189077922988354790",
+      "displayName": "Audited Resource - Log entries",
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_COUNT",
+            "groupByFields": [
+              "metric.label.log",
+              "metric.label.severity"
+            ],
+            "perSeriesAligner": "ALIGN_RATE"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "0s",
+        "filter": "resource.type = \"audited_resource\" AND metric.type = \"logging.googleapis.com/log_entry_count\" AND (metric.labels.log = \"cloudaudit.googleapis.com/activity\" AND metric.labels.severity = \"NOTICE\")",
+        "thresholdValue": 100,
+        "trigger": {
+          "percent": 100
+        }
+      }
+    }
+  ],
+  "alertStrategy": {
+    "autoClose": "604800s"
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [
+    "projects/jnu-idv-11/notificationChannels/10245659636138809629",
+    "projects/jnu-idv-11/notificationChannels/1362676258199312399"
+  ],
+  "creationRecord": {
+    "mutateTime": "2023-08-09T00:13:36.112761043Z",
+    "mutatedBy": "latency.dn@gmail.com"
+  },
+  "mutationRecord": {
+    "mutateTime": "2023-08-09T00:13:36.112761043Z",
+    "mutatedBy": "latency.dn@gmail.com"
+  }
+}
