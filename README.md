@@ -22,14 +22,14 @@
 
 ### 📚 기술 스택
 ![Static Badge](https://img.shields.io/badge/Google%20Cloud%20Platform-%234285F4?style=flat&logo=googlecloud&logoColor=white&labelColor=%234285F4)
-<br>
 ![Static Badge](https://img.shields.io/badge/Python-%233776AB?logo=python&logoColor=white&labelColor=%233776AB)
 ![Static Badge](https://img.shields.io/badge/TensorFlow-%23FF6F00?logo=tensorflow&logoColor=white&labelColor=%23FF6F00)
-<br>
+![Static Badge](https://img.shields.io/badge/Keras-%23D00000?style=flat&logo=keras&logoColor=white&labelColor=%23D00000)
+![Static Badge](https://img.shields.io/badge/MySQL-%234479A1?style=flat&logo=mysql&logoColor=white&labelColor=%234479A1)
+![Static Badge](https://img.shields.io/badge/pandas-%23150458?style=flat&logo=pandas&logoColor=white&labelColor=%23150458)
+![Static Badge](https://img.shields.io/badge/Apache%20Beam-%23E25A1C?style=flat&logoColor=white&labelColor=%23E25A1C)
 ![Static Badge](https://img.shields.io/badge/Java-%23E85C33?labelColor=%23E85C33)
 ![Static Badge](https://img.shields.io/badge/Spring%20Boot-%236DB33F?style=flat&logo=springboot&logoColor=white&labelColor=%236DB33F)
-<br>
-![Static Badge](https://img.shields.io/badge/Git-%23F05032?logo=git&logoColor=white&labelColor=%23F05032)
 ![Static Badge](https://img.shields.io/badge/GitHub-%23181717?logo=git&logoColor=white&labelColor=%23181717)
 
 ### 🗓️ 개발 일정
@@ -39,22 +39,21 @@
 
 <img src="https://github.com/Latencygg/kipl/blob/main/pic/wbs.png" width="auto" height="auto">
 
-### 🔎 시나리오
-
-<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario8.PNG" width="auto" height="auto">
-<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario1.PNG" width="auto" height="auto">
-<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario2.jpg" width="auto" height="auto">
-
 ### 📑 ERD
 
+#### Scenario
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario8.PNG" width="auto" height="auto">
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/scenario1.PNG" width="auto" height="auto">
+
 #### DB Schema
-<img src="https://github.com/Latencygg/kipl/blob/main/pic/db_schema_erd.png" width="auto" height="auto">
+<img src="https://github.com/Latencygg/kipl/blob/main/pic/kipl_dataset_schema.png" width="auto" height="auto">
 
 ### 🔗 API
-  - 영유아의 나이를 기준으로 세분화한 식단 제공 서비스
+  - 영유아의 개월수를 기준으로 세분화한 식단 제공 서비스
   - 알러지 필터링 서비스
   - 기존 데이터에 없던 식단 추가 리포트 요청
   - 추천받은 식단에 대한 👍🏻(Good) & 👎🏻(Bad) 평가
+  - 딥러닝 모델 기반 잘못된 데이터 입력(공격)에 대한 방어
 
 ### 🖥️ 프로토타입
 
