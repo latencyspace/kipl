@@ -33,10 +33,12 @@
 ![Static Badge](https://img.shields.io/badge/GitHub-%23181717?logo=git&logoColor=white&labelColor=%23181717)
 
 ### 📢 프레젠테이션
-  - [해당 문서를 확인해주세요!](https://docs.google.com/presentation/d/1N2k06W986UxusSEhcLNO-zW8Q9qEfn_TwxYo4GF4fuE/edit?usp=sharing)
+  - [Google Slides](https://docs.google.com/presentation/d/1N2k06W986UxusSEhcLNO-zW8Q9qEfn_TwxYo4GF4fuE/edit?usp=sharing)
 
 ### 🗓️ 개발 일정
-  - [해당 문서를 확인해주세요!](https://docs.google.com/spreadsheets/d/1K13jrMJEbruGH6SgpTZyGPpVdJmgOs0t4wgxs4v66hs/edit?usp=sharing)
+  - [Project Backlog](https://github.com/users/Latencygg/projects/3)
+  - [Issue Control](https://github.com/Latencygg/kipl/issues)
+  - [Google Spreadsheets](https://docs.google.com/spreadsheets/d/1K13jrMJEbruGH6SgpTZyGPpVdJmgOs0t4wgxs4v66hs/edit?usp=sharing)
 
 ### 📌 WBS
 
@@ -56,11 +58,24 @@
   - 알러지 필터링 서비스
   - 기존 데이터에 없던 식단 추가 리포트 요청
   - 추천받은 식단에 대한 👍🏻(Good) & 👎🏻(Bad) 평가
-  - 딥러닝 모델 기반 잘못된 데이터 입력(공격)에 대한 방어
+  - 딥러닝 모델 기반 잘못된 데이터 입력에 대한 방어
 
 ### 🖥️ 프로토타입
 
 ### 🔑 기술적 이슈와 해결 과정
+
+  #### Dataflow Runner
+  - Dataflow API 이용 시 Direct Runner는 동작이 가능하나, Dataflow Runner는 동작이 실패하였음
+  - 위 문제를 Pcollection 생성 부분의 단계에서 beam.Create 대신 ReadFromText 함수를 사용하여 해결
+  - 2개의 Pcollection을 합칠 때, 처리해야 할 데이터의 요소 합치기 문제 발생
+  - Flatten() 함수를 사용하여 하나로 묶어진 데이터를, DoFn을 이용하여 요소를 합쳐 해결
+  
+  #### 서버 배포 과정
+  
+  #### 필터링 로직 구현 과정
+  - Dataflow: Model의 picklable 문제로 인해 실패
+  - Cloud Function: Model이 Cloud Function 내에 업로드가 불가능하여 실패
+  - Vertex AI NLP Model + Prompt(PaLM 2): 모델을 서버 단위에서 불러와서 실행에 성공
 
 ### ❗️ 프로젝트 작업 시 유의사항
 
