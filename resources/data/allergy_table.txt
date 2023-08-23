@@ -1,0 +1,87 @@
+# 사용 라이브러리 : pandas, google.cloud, re,mysql.connector
+# 사용 API : Vertual AI's Jupyter Notebook, GCP
+
+# 코드 이용시 주의사항 : GCP Vertual AI's Jupyter NoteBook으로 작업을 하여서, 파일 다운로드 path나 csv저장 경로는 local에서 진행시 각 체제의 맞게 변경 바람!!
+========================================================================================================================================================================
+========================================================================================================================================================================
+
+# [코드]
+
+import pandas as pd
+from google.cloud import storage
+import re
+import mysql.connector
+
+df = pd.read_csv('ingredient.csv')
+
+# 재료들의 이름 추출
+ingredient_list = df['0']
+ingredient = ingredient_list.values
+
+ingredient = [item for item in ingredient if item not in ('일반형', '일품', '날것', '과즙', '신고', '생과',
+                                                         '재래종', '볶은것', '적육질', '보통', '호상', '도정곡','생것','마른것','국내산')]
+
+# 알러지 대표적인 12가지 카테고리 분류 후, 기존 재료들 분류
+
+allergy = ['메밀', '밀', '대두', '견과류', '육류', '갑각류', '복숭아', '토마토', '난류', '우유', '조개류', '굴,전복,홍합', '아황산포함식품']
+
+allergy_dict = {}
+
+allergy_dict['메밀'] = ['메밀']
+allergy_dict['밀'] =  ['밀가공식품','밀가루']
+allergy_dict['대두'] = ['대두','검정콩']
+allergy_dict['견과류'] = ['땅콩','아몬드']
+allergy_dict['육류'] = ['쇠고기','한우','닭고기','다시마','육수','가슴살','조기','돔','감성돔','명태','대구','사태']
+allergy_dict['갑각류'] = ['랍스터','꽃개']
+allergy_dict['복숭아'] = ['복숭아']
+allergy_dict['토마토'] = ['토마토']
+allergy_dict['난류'] = ['계란','난황']
+allergy_dict['우유'] = ['분유','조제분유','치즈','가공치즈','우유','가공우유']
+allergy_dict['조개류'] = ['조개']
+allergy_dict['굴,전복,홍합'] = ['굴','전복','홍합']
+allergy_dict['기타'] = []
+
+
+# 1차적으로 분류된 재료를 제외한 나머지 제료 '기타'에 삽입
+for i in ingredient:
+    found = False
+    for key, values in allergy_dict.items():
+        if i in values:
+            found = True
+            break
+    if not found:
+        allergy_dict['기타'].append(i)
+
+# 외부 IP로 GCP에 CLOUDSQL에 연결 객체 생성
+# Replace with your connection details
+db_config = {
+    'user': 'root',
+    'password': 'gusdn@0228',
+    'host': '34.70.107.83',
+    'database': 'allergy'
+}
+
+
+# allergy table을 생성하고 분류했던 재료들을 삽입
+create_tbl = "CREATE TABLE IF NOT EXISTS allergy_tbl (ingredient varchar(100) not null primary key,allergy_name varchar(100));"
+
+try:
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    cursor.execute(create_tbl)
+    for key,value in allergy_dict.items():
+        for a in value:
+            values = (a,key)
+            query = "INSERT INTO allergy_tbl (ingredient, allergy_name) VALUES (%s, %s)"
+            cursor.execute(query, values)
+    connection.commit()
+    print("Data inserted successfully!")
+
+except mysql.connector.Error as error:
+    print("Error:", error)
+
+finally:
+    if connection.is_connected():
+        cursor.close()
+        connection.close()
+        print("Connection closed")

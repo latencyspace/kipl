@@ -1,0 +1,241 @@
+# 사용 라이브러리 : urllib, bs4, pandas, google.cloud, json, re, collections, fastavro
+# Crawling url : https://ccfsm.foodnara.go.kr/?menuno=132&pageIndex={} 1~15
+# Crawling url : https://ccfsm.foodnara.go.kr/meal/recipe/infantinfo/recipe_popup.html?fcode={} 3101~3341
+# 크롤링 웹 사이트 출처 : 어린이 급식지원 관리센터(https://ccfsm.foodnara.go.kr/?menuno=132)
+# 사용 API : Vertual AI's Jupyter Notebook, GCP
+
+# 코드 이용시 주의사항 : GCP Vertual AI's Jupyter NoteBook으로 작업을 하여서, 파일 다운로드 path나 csv저장 경로는 local에서 진행시 각 체제의 맞게 변경 바람!!
+========================================================================================================================================================================
+========================================================================================================================================================================
+
+# [코드]
+
+import urllib.request as req
+import urllib.parse as parse
+from bs4 import BeautifulSoup as bs
+import pandas as pd
+from google.cloud import storage
+import json
+import re
+from collections import OrderedDict
+import fastavro
+
+cate = []
+obj = []
+base_url = 'https://ccfsm.foodnara.go.kr/?menuno=132&pageIndex={}'
+
+# 페이지 인덱스가 1부터 15까지인 반복문
+for page_index in range(1, 16):
+    url = base_url.format(page_index)
+    temp = req.urlopen(url).read()
+    soup = bs(temp, "html.parser")
+    
+    # table tag중 style이 margin-bottom: 8px라는 부분 전부 추출
+    foods = soup.find_all('table', {'style': 'margin-bottom: 8px'})
+
+    for food in foods:
+        # style tag중에 td부분의 태그의 strong과 span의 텍스트 추출
+        for temp in food.find_all('td', {'class': 'txt_ss'}):
+            # 문자 ',' 기준으로 분리 후 사이의 분순물 제거
+            cate.append(temp.find('strong').text.replace('\t', '').replace('\n', ''))
+            obj.append(temp.find('span').text.replace('\t', '').replace('\n', ''))
+
+i = 0
+food_name = []
+ingredients = []
+temp_dick = {}
+kal = []
+while True:
+    try:
+        #추출한 리스트에서 음식 이름, 카테고리, 칼로리, 레시피 재료 추출
+        if i%3 == 0:
+            food_name.append((obj[i].split(' '))[-1])
+        elif i%3 == 1:
+            kal.append((obj[i].split(' '))[0])
+        else:
+            ingredients.append(obj[i].split(','))
+        i+=1
+    except IndexError:
+        break
+
+cate = list(set(cate))
+# ingredients의 리스트를 하나의 리스트로 줄임
+flat_list = [item for sublist in ingredients for item in sublist]
+
+
+ingredient = []
+#flat_list안의 내용의 중복화 없애기, 순서를 생각하면서 없애기 위해 집합(set)대신 OrderedDict사용
+cleaned_flat_list = [x.strip() for x in flat_list]  
+ingredient = list(OrderedDict.fromkeys(flat_list))
+
+
+# 리스트로 만든 재료들을 사전으로 전환
+temp_dick = temp_dick.fromkeys(ingredient, 0)
+
+# 파싱하면서 발생한 문자 앞뒤의 공백 제거
+cleaned_ingredients = [[x.strip() for x in item if x != ' '] for item in ingredients]
+
+# 리스트 안에 있던 ''인자 제거
+cleaned_ingredient = [x.strip() for x in ingredient]
+if '' in cleaned_ingredient:
+    cleaned_ingredient.remove('')
+
+# 공백떄문에 발생한 중복으로 인한 다시한번 중복제거
+ingredient = []
+for i in cleaned_ingredient:
+    if i not in ingredient:
+        ingredient.append(i)
+
+# 재료 인덱스화
+ingredient_index = {name:index for index,name in enumerate(ingredient)}
+
+# 재료 인덱스 따로 분리시켜 정리
+cleaned_ingredient_temp = []
+cleaned_ingredient_temp2 = []
+ingredient_keys = [key for key in ingredient_index.keys()]
+cleaned_ingredient_temp = [[ingredient_index[x] for x in cleaned_ingredients[i]] for i in range(len(cleaned_ingredients))]
+
+gram_name_index = []
+
+# 정규표현식 패턴 설정
+pattern = re.compile(r'(\d+)g')
+
+# 각 서브리스트 안의 재료들을 순회하며 숫자 추출
+for sublist in cleaned_ingredients:
+    cleaned_sublist = []
+    for sub_ingredient in sublist:
+        # 정규표현식으로 숫자 추출
+        matches = pattern.findall(sub_ingredient)
+        if matches:
+            for match in matches:
+                # 숫자로 변환하여 "g"를 제거하고 숫자와 재료 이름을 쌍으로 묶어서 cleaned_sublist에 추가
+                cleaned_sublist.append([int(match), sub_ingredient.replace(match + 'g', '').strip()])
+        else:
+            # 추출된 숫자가 없으면 원래 재료를 그대로 추가
+            cleaned_sublist.append([-1,sub_ingredient])
+    gram_name_index.append(cleaned_sublist)
+
+# 정리된 재료 리스트 출력
+for i in range(len(gram_name_index)):
+    for j in range(len(gram_name_index[i])):
+        gram_name_index[i][j].append(cleaned_ingredient_temp[i][j])
+
+# df를 위한 gram, in_name, index를 따로 추출
+gram = [[x[0] for x in temp] for temp in gram_name_index]
+in_name = [[x[1] for x in temp] for temp in gram_name_index]
+index = [[x[-1] for x in temp] for temp in gram_name_index]
+
+# 음식이름과 칼로리 컬럼 생성
+df= pd.DataFrame({
+    'food_name' : food_name,
+    'ingredient' : in_name,
+    'index' : index,
+    'gram' : gram
+})
+
+nutrient = []
+measure = []
+# 각 이유식의 영양소를 출력하기 위한 2차 크롤링
+base_url = 'https://ccfsm.foodnara.go.kr/meal/recipe/infantinfo/recipe_popup.html?fcode={}'
+
+# 각 이유식의 url 쿼리의 범위 3101~3341
+for page_index in range(3101,3341):
+    url = base_url.format(page_index)
+    temp = req.urlopen(url).read()
+    soup = bs(temp, "html.parser")
+    
+    foods = soup.find_all('table', {'class': 'recipe_table'})
+    nu = soup.find_all('th')
+    size = soup.find_all('td',{'class':'wh'})
+    name = soup.find('td',{'class':"style1"})
+    if name.text == '': # 중간에 정보가 없는 크롤링으로 인한 정보 추출 제외
+        continue
+    # 영양소와 수치를 각각 따로 분리
+    nutrient.append([x.text for x in nu])
+    measure.append([float(y.text) for y in size])
+
+# 컬럼을 영양소 이름으로 두고, 치수를 value값으로 정한뒤에 DataFrame화
+nutrient_df = pd.DataFrame(measure, columns=nutrient[0])
+
+# 기존 df와 새롭게 추출한 영양소와 치수 concat
+df = pd.concat([df, nutrient_df], axis=1)
+
+# 새롭게 바뀐 df를 csv파일로 저장
+df.to_csv('test.csv')
+
+# CSV 파일의 경로 설정
+csv_file_path = 'test.csv'
+
+# CSV 파일을 pandas DataFrame으로 읽기
+df = pd.read_csv(csv_file_path)
+
+# JSON 형식의 데이터를 저장할 리스트 생성
+json_data = []
+
+# DataFrame을 가공하여 JSON 형식으로 변환
+for index, row in df.iterrows():
+    json_item = {
+        "food_name": row["food_name"],
+        "ingredient_name" : eval(row["ingredient"]),
+        "ingredient_index": eval(row["index"]),
+        "ingredient_gram": eval(row["gram"]),
+        "calorie" : row["열량(kcal)"],
+        "carbohydrate" : row["탄수화물(g)"],
+        "protein" : row["단백질(g)"],
+        "fat" : row["지방(g)"],
+        "fiber" : row["섬유소(g)"],
+        "calcium" : row["칼슘(mg)"],
+        "phosphorus" : row["인(mg)"],
+        "iron" : row["철(mg)"],
+        "sodium" : row["나트륨(mg)"],
+        "potassium" : row["칼륨(mg)"],
+        "vitamin_A" : row["비타민A(yg)"],
+        "thiamine" : row["티아민(mg)"],
+        "riboflavin" : row["리보플라빈(mg)"],
+        "niacin" : row["나이아신(mg)"],
+        "vitamin_C" : row["비타민C(mg)"],
+    }
+    json_data.append(json_item)
+
+# Avro 파일로 저장 -> BigQuery형식 편리화를 위한 JSON 에서 AVRO로 변환
+avro_file_path = 'output.avro'
+schema = {
+    "type": "record",
+    "name": "food_data",
+    "fields": [
+        {"name": "food_name", "type": "string"},
+        {"name": "ingredient_name", "type": {"type": "array", "items": "string"}},
+        {"name": "ingredient_index", "type": {"type": "array", "items": "int"}},
+        {"name": "ingredient_gram", "type": {"type": "array", "items": "int"}},
+        {"name": "calorie", "type": "float"},
+        {"name": "carbohydrate", "type": "float"},
+        {"name": "protein", "type": "float"},
+        {"name": "fat", "type": "float"},
+        {"name": "fiber", "type": "float"},
+        {"name": "calcium", "type": "float"},
+        {"name": "phosphorus", "type": "float"},
+        {"name": "iron", "type": "float"},
+        {"name": "sodium", "type": "float"},
+        {"name": "potassium", "type": "float"},
+        {"name": "vitamin_A", "type": "float"},
+        {"name": "thiamine", "type": "float"},
+        {"name": "riboflavin", "type": "float"},
+        {"name": "niacin", "type": "float"},
+        {"name": "vitamin_C", "type": "float"},
+         ]
+}
+
+with open(avro_file_path, 'wb') as avro_file:
+    fastavro.writer(avro_file, schema, json_data)
+
+print("Avro 파일로 변환되었습니다.")
+
+bucket_name = 'jnu-idv-05-data'    # 서비스 계정 생성한 bucket 이름 입력
+source_file_name = 'output.avro'    # GCP에 업로드할 파일 절대경로
+destination_blob_name = 'test.avro'    # 업로드할 파일을 GCP에 저장할 때의 이름
+
+
+storage_client = storage.Client() # GCP bucket의 연결객체 생성
+bucket = storage_client.bucket(bucket_name)
+blob = bucket.blob(destination_blob_name)
+blob.upload_from_filename(source_file_name) # bucket에 파일 load
