@@ -32,6 +32,9 @@
 ![Static Badge](https://img.shields.io/badge/Spring%20Boot-%236DB33F?style=flat&logo=springboot&logoColor=white&labelColor=%236DB33F)
 ![Static Badge](https://img.shields.io/badge/GitHub-%23181717?logo=git&logoColor=white&labelColor=%23181717)
 
+### 📢 프레젠테이션
+  - [해당 문서를 확인해주세요!](https://docs.google.com/presentation/d/1N2k06W986UxusSEhcLNO-zW8Q9qEfn_TwxYo4GF4fuE/edit?usp=sharing)
+
 ### 🗓️ 개발 일정
   - [해당 문서를 확인해주세요!](https://docs.google.com/spreadsheets/d/1K13jrMJEbruGH6SgpTZyGPpVdJmgOs0t4wgxs4v66hs/edit?usp=sharing)
 
