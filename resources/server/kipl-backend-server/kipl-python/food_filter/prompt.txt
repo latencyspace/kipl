@@ -1,0 +1,68 @@
+True
+False
+
+Text: 쌀 미음
+Categories: True
+
+Text: 감자 미음
+Categories: True
+
+Text: 이런건 당연히 안되겠지
+Categories: False
+
+Text: 순두부 찌개
+Categories: False
+
+Text: 죽
+Categories: True
+
+Text: 부추 전
+Categories: False
+
+Text: 매콤 제육 볶음
+Categories: False
+
+Text: 해물 볶음밥
+Categories: False
+
+Text: 닭고기 시금치 그라탕
+Categories: True
+
+Text: 블루 베리 머핀
+Categories: False
+
+Text: 명태 배 진밥
+Categories: True
+
+Text: dsasadnkasjn
+Categories: False
+
+Text: wqeqweqwoneqwondmdlkasmlkdad
+Categories: False
+
+Text: 명태 옥수수 달걀 진밥
+Categories: True
+
+Text : 오징어 찌개
+Categories : False
+
+Text : 홍차 라떼
+Categories : False
+
+Text : 닭고기 적채 감자
+Categories : True
+
+Text : 현미 당근 묽은진죽
+Categories : True
+
+Text : 미역초 무침
+Categories : False
+
+Text : 치킨 데리야끼
+Categories : False
+
+Text : 국밥
+Categories : False
+
+Text : 돼지 갈비 찜
+Categories : False

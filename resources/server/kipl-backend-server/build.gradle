@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
+}
+
+group = 'com.kipl'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://packages.confluent.io/maven/" }
+}
+
+ext {
+    set('springCloudGcpVersion', "4.7.1")
+    set('springCloudVersion', "2022.0.4")
+}
+
+dependencies {
+    // Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // DB
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Developer kit
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Cloud
+    runtimeOnly 'com.google.cloud.sql:mysql-socket-factory-connector-j-8'
+    implementation 'com.google.cloud:spring-cloud-gcp-starter'
+
+    implementation platform('com.google.cloud:libraries-bom:26.19.0')
+    implementation 'com.google.cloud:google-cloud-bigquery'
+
+    // DataFlow
+    implementation 'org.apache.beam:beam-sdks-java-core:2.34.0' // Apache Beam dependencies
+    implementation 'org.apache.beam:beam-runners-google-cloud-dataflow-java:2.34.0' // Dataflow runner
+
+    implementation 'io.confluent:kafka-avro-serializer:5.3.2'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
