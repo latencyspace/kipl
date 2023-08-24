@@ -29,16 +29,6 @@ from apache_beam.options.pipeline_options import GoogleCloudOptions
 from apache_beam.options.pipeline_options import PipelineOptions, GoogleCloudOptions
 import os
 
-
-# 키 : jnu-team-03-2-79e382adc425.json
-key_path = glob.glob("jnu-team-03-2-79e382adc425.json")[0]
-# Google Cloud의 서비스 계정 키 파일 경로
-KEY_PATH = "jnu-team-03-2-79e382adc425.json"
-# Credentials 객체 생성
-credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
-# 빅쿼리 클라이언트 객체 생성
-client = bigquery.Client(credentials = credentials, project = credentials.project_id)
-
 def get_evaluation(x):
     temp_list = []
     def select_evaluation(x):
@@ -67,13 +57,6 @@ def get_evaluation(x):
         if connection.is_connected():
             cursor.close()
             connection.close()
-
-db_config = {
-    'user': 'root',
-    'password': 'raZdeq-6xukve-qystoq',
-    'host': '34.64.169.138',
-    'database': 'kipl_database'
-}
 
 def food_dict():
     temp_board = bq_select('jnu-team-03-2.kipl_bigquery_database.menu_board')
